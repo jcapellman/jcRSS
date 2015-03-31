@@ -1,0 +1,188 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Rijndael256</name>
+    </assembly>
+    <members>
+        <member name="T:Rijndael256.Hash">
+            <summary>
+            Cryptographic hash functions.
+            </summary>
+        </member>
+        <member name="M:Rijndael256.Hash.Sha512(System.String)">
+            <summary>
+            Generates an SHA-512 hash from the specified <paramref name="data"/>.
+            </summary>
+            <param name="data">The data.</param>
+            <returns>The hash.</returns>
+        </member>
+        <member name="M:Rijndael256.Hash.Pbkdf2(System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            Generates a PBKDF2 hash from the specified <paramref name="data"/>.
+            </summary>
+            <param name="data">The data.</param>
+            <param name="salt">The salt.</param>
+            <param name="iterations">The number of iterations to derive the hash.</param>
+            <param name="size">The size of the hash.</param>
+            <returns>The hash.</returns>
+        </member>
+        <member name="M:Rijndael256.Hash.Pbkdf2(System.String,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Generates a PBKDF2 hash from the specified <paramref name="data"/>.
+            </summary>
+            <param name="data">The data.</param>
+            <param name="salt">The salt.</param>
+            <param name="iterations">The number of iterations to derive the hash.</param>
+            <param name="size">The size of the hash.</param>
+            <returns>The hash.</returns>
+        </member>
+        <member name="T:Rijndael256.Rijndael">
+            <summary>
+            AES implementation of the Rijndael symmetric-key cipher.
+            </summary>
+        </member>
+        <member name="M:Rijndael256.Rijndael.Encrypt(System.String,System.String,Rijndael256.KeySize)">
+            <summary>
+            Encrypts data using the Rijndael cipher in CBC mode with a password derived HMAC SHA1 salt.
+            A random 128-bit Initialization Vector is generated for the cipher, and inserted at the
+            beginning of the resulting Base64 encoded string.
+            </summary>
+            <param name="data">The data to encrypt.</param>
+            <param name="password">The password to encrypt the data with.</param>
+            <param name="keySize">The cipher key size. 256-bit is stronger, but slower.</param>
+            <returns>The encrypted data.</returns>
+        </member>
+        <member name="M:Rijndael256.Rijndael.Encrypt(System.Byte[],System.String,Rijndael256.KeySize)">
+            <summary>
+            Encrypts data using the Rijndael cipher in CBC mode with a password derived HMAC SHA1 salt.
+            A random 128-bit Initialization Vector is generated for the cipher, and inserted at the
+            beginning of the resulting Base64 encoded string.
+            </summary>
+            <param name="data">The data to encrypt.</param>
+            <param name="password">The password to encrypt the data with.</param>
+            <param name="keySize">The cipher key size. 256-bit is stronger, but slower.</param>
+            <returns>The encrypted data.</returns>
+        </member>
+        <member name="M:Rijndael256.Rijndael.Encrypt(System.Byte[],System.String,System.Byte[],Rijndael256.KeySize)">
+            <summary>
+            Encrypts data using the Rijndael cipher in CBC mode with a password derived HMAC SHA1 salt.
+            </summary>
+            <param name="data">The data to encrypt.</param>
+            <param name="password">The password to encrypt the data with.</param>
+            <param name="iv">The initialization vector. Must be 128-bits.</param>
+            <param name="keySize">The cipher key size. 256-bit is stronger, but slower.</param>
+            <returns>The encrypted data.</returns>
+        </member>
+        <member name="M:Rijndael256.Rijndael.Encrypt(System.String,System.String,System.String,Rijndael256.KeySize)">
+            <summary>
+            Encrypts a file using the Rijndael cipher in CBC mode with a password derived HMAC SHA1 salt.
+            A random 128-bit Initialization Vector is generated for the cipher, and inserted at the
+            beginning of the resulting file.
+            </summary>
+            <param name="inFile">The file to encrypt.</param>
+            <param name="outFile">The new encrypted file.</param>
+            <param name="password">The password to encrypt the file with.</param>
+            <param name="keySize">The cipher key size. 256-bit is stronger, but slower.</param>
+        </member>
+        <member name="M:Rijndael256.Rijndael.Decrypt(System.String,System.String,Rijndael256.KeySize)">
+            <summary>
+            Decrypts data using the Rijndael cipher in CBC mode with a password derived HMAC SHA1 salt.
+            This method expects a Base64 encoded string, with a 128-bit Initiliazation Vector embedded 
+            at the beginning of the data.
+            </summary>
+            <param name="data">The data to decrypt.</param>
+            <param name="password">The password to decrypt the data with.</param>
+            <param name="keySize">The size of the cipher key used to encrypt the data.</param>
+            <returns>The decrypted data.</returns>
+        </member>
+        <member name="M:Rijndael256.Rijndael.Decrypt(System.Byte[],System.String,Rijndael256.KeySize)">
+            <summary>
+            Decrypts data using the Rijndael cipher in CBC mode with a password derived HMAC SHA1 salt.
+            This method expects a 128-bit Initiliazation Vector embedded at the beginning of the data.
+            </summary>
+            <param name="data">The data to decrypt.</param>
+            <param name="password">The password to decrypt the data with.</param>
+            <param name="keySize">The size of the cipher key used to encrypt the data.</param>
+            <returns>The decrypted data.</returns>
+        </member>
+        <member name="M:Rijndael256.Rijndael.Decrypt(System.Byte[],System.String,System.Byte[],Rijndael256.KeySize)">
+            <summary>
+            Decrypts data using the Rijndael cipher in CBC mode with a password derived HMAC SHA1 salt.
+            </summary>
+            <param name="data">The data to decrypt.</param>
+            <param name="password">The password to decrypt the data with.</param>
+            <param name="iv">The initialization vector. Must be 128-bits.</param>
+            <param name="keySize">The size of the cipher key used to encrypt the data.</param>
+            <returns>The decrypted data.</returns>
+        </member>
+        <member name="M:Rijndael256.Rijndael.Decrypt(System.String,System.String,System.String,Rijndael256.KeySize)">
+            <summary>
+            Decrypts a file using the Rijndael cipher in CBC mode with a password derived HMAC SHA1 salt.
+            This method expects a 128-bit Initiliazation Vector embedded at the beginning of the file.
+            </summary>
+            <param name="inFile">The file to decrypt.</param>
+            <param name="outFile">The new decrypted file.</param>
+            <param name="password">The password to decrypt the file with.</param>
+            <param name="keySize">The size of the cipher key used to encrypt the data.</param>
+        </member>
+        <member name="M:Rijndael256.Rijndael.GenerateRandomBytes(System.Int32)">
+            <summary>
+            Generates an array of bytes using a cryptographically strong sequence
+            of random values.
+            </summary>
+            <param name="size">The size of the array.</param>
+            <returns>The array of bytes.</returns>
+        </member>
+        <member name="M:Rijndael256.Rijndael.GenerateKey(System.String,Rijndael256.KeySize)">
+            <summary>
+            Generates a cryptographic key from the specified password.
+            </summary>
+            <param name="password">The password.</param>
+            <param name="keySize">The cipher key size. 256-bit is stronger, but slower.</param>
+            <returns>The cryptographic key.</returns>
+        </member>
+        <member name="M:Rijndael256.Rijndael.CreateEncryptor(System.String,System.Byte[],Rijndael256.KeySize)">
+            <summary>
+            Creates a symmetric Rijndael encryptor.
+            </summary>
+            <param name="password">The password to encrypt the data with.</param>
+            <param name="iv">The initialization vector. Must be 128-bits.</param>
+            <param name="keySize">The cipher key size. 256-bit is stronger, but slower.</param>
+            <returns>The symmetric encryptor.</returns>
+        </member>
+        <member name="M:Rijndael256.Rijndael.CreateDecryptor(System.String,System.Byte[],Rijndael256.KeySize)">
+            <summary>
+            Creates a symmetric Rijndael decryptor.
+            </summary>
+            <param name="password">The password to decrypt the data with.</param>
+            <param name="iv">The initialization vector. Must be 128-bits.</param>
+            <param name="keySize">The cipher key size.</param>
+            <returns>The symmetric decryptor.</returns>
+        </member>
+        <member name="P:Rijndael256.Rijndael.RandomNumberGenerator">
+            <summary>
+            A cryptographically strong random number generator.
+            </summary>
+        </member>
+        <member name="T:Rijndael256.KeySize">
+            <summary>
+            AES approved cipher key sizes.
+            </summary>
+        </member>
+        <member name="F:Rijndael256.KeySize.Aes128">
+            <summary>
+            128-bit
+            </summary>
+        </member>
+        <member name="F:Rijndael256.KeySize.Aes192">
+            <summary>
+            192-bit
+            </summary>
+        </member>
+        <member name="F:Rijndael256.KeySize.Aes256">
+            <summary>
+            256-bit
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="jcRSSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="WEBAPI_addContentSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ContentTitle" Type="varchar" Mode="In" />
+          <Parameter Name="ContentBody" Type="varchar(max)" Mode="In" />
+          <Parameter Name="ContentPostDate" Type="datetimeoffset" Mode="In" />
+          <Parameter Name="ContentAuthor" Type="varchar" Mode="In" />
+          <Parameter Name="FeedID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="WEBAPI_addFeed2UserSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FeedID" Type="int" Mode="In" />
+          <Parameter Name="UserID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="WEBAPI_addFeedSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FeedURL" Type="varchar(max)" Mode="In" />
+          <Parameter Name="FeedTitle" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="WEBAPI_getContentListSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="FeedID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="WEBAPI_getFeedListingSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="WEBAPI_markContentAsReadSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="Feed2ContentID" Type="int" Mode="In" />
+          <Parameter Name="FeedID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="WEBAPI_removeUserFeedSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FeedID" Type="int" Mode="In" />
+          <Parameter Name="UserID" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="jcRSSModelStoreContainer" />
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="jcRSSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="jcRSSEntities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="WEBAPI_addContentSP">
+            <Parameter Name="ContentTitle" Mode="In" Type="String" />
+            <Parameter Name="ContentBody" Mode="In" Type="String" />
+            <Parameter Name="ContentPostDate" Mode="In" Type="DateTimeOffset" />
+            <Parameter Name="ContentAuthor" Mode="In" Type="String" />
+            <Parameter Name="FeedID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="WEBAPI_addFeed2UserSP">
+            <Parameter Name="FeedID" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="WEBAPI_addFeedSP" ReturnType="Collection(Int32)">
+            <Parameter Name="FeedURL" Mode="In" Type="String" />
+            <Parameter Name="FeedTitle" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="WEBAPI_markContentAsReadSP">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="Feed2ContentID" Mode="In" Type="Int32" />
+            <Parameter Name="FeedID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="WEBAPI_removeUserFeedSP">
+            <Parameter Name="FeedID" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="WEBAPI_getFeedListingSP" ReturnType="Collection(jcRSSModel.WEBAPI_getFeedListingSP_Result)">
+          <Parameter Name="UserID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="WEBAPI_getContentListSP" ReturnType="Collection(jcRSSModel.WEBAPI_getContentListSP_Result)">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="FeedID" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="WEBAPI_getFeedListingSP_Result">
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="255" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="NumUnread" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="WEBAPI_getContentListSP_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="ContentTitle" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="ContentBody" Nullable="false" />
+          <Property Type="String" Name="ContentPostAuthor" Nullable="false" MaxLength="255" />
+          <Property Type="DateTimeOffset" Name="ContentPostDate" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="jcRSSModelStoreContainer" CdmEntityContainer="jcRSSEntities" >
+          <FunctionImportMapping FunctionImportName="WEBAPI_addContentSP" FunctionName="jcRSSModel.Store.WEBAPI_addContentSP" />
+          <FunctionImportMapping FunctionImportName="WEBAPI_addFeed2UserSP" FunctionName="jcRSSModel.Store.WEBAPI_addFeed2UserSP" />
+          <FunctionImportMapping FunctionImportName="WEBAPI_addFeedSP" FunctionName="jcRSSModel.Store.WEBAPI_addFeedSP" />
+          <FunctionImportMapping FunctionImportName="WEBAPI_markContentAsReadSP" FunctionName="jcRSSModel.Store.WEBAPI_markContentAsReadSP" />
+          <FunctionImportMapping FunctionImportName="WEBAPI_removeUserFeedSP" FunctionName="jcRSSModel.Store.WEBAPI_removeUserFeedSP" />
+          <FunctionImportMapping FunctionImportName="WEBAPI_getFeedListingSP" FunctionName="jcRSSModel.Store.WEBAPI_getFeedListingSP">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="jcRSSModel.WEBAPI_getFeedListingSP_Result">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NumUnread" ColumnName="NumUnread" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="WEBAPI_getContentListSP" FunctionName="jcRSSModel.Store.WEBAPI_getContentListSP">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="jcRSSModel.WEBAPI_getContentListSP_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ContentTitle" ColumnName="ContentTitle" />
+                <ScalarProperty Name="ContentBody" ColumnName="ContentBody" />
+                <ScalarProperty Name="ContentPostAuthor" ColumnName="ContentPostAuthor" />
+                <ScalarProperty Name="ContentPostDate" ColumnName="ContentPostDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
