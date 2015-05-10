@@ -12,8 +12,6 @@ namespace jcRSS.DataLayer.Entities
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using System.Data.Entity.Core.Objects;
-    using System.Linq;
     
     public partial class jcRSSEntities : DbContext
     {
@@ -27,108 +25,11 @@ namespace jcRSS.DataLayer.Entities
             throw new UnintentionalCodeFirstException();
         }
     
-    
-        public virtual int WEBAPI_addContentSP(string contentTitle, string contentBody, Nullable<System.DateTimeOffset> contentPostDate, string contentAuthor, Nullable<int> feedID)
-        {
-            var contentTitleParameter = contentTitle != null ?
-                new ObjectParameter("ContentTitle", contentTitle) :
-                new ObjectParameter("ContentTitle", typeof(string));
-    
-            var contentBodyParameter = contentBody != null ?
-                new ObjectParameter("ContentBody", contentBody) :
-                new ObjectParameter("ContentBody", typeof(string));
-    
-            var contentPostDateParameter = contentPostDate.HasValue ?
-                new ObjectParameter("ContentPostDate", contentPostDate) :
-                new ObjectParameter("ContentPostDate", typeof(System.DateTimeOffset));
-    
-            var contentAuthorParameter = contentAuthor != null ?
-                new ObjectParameter("ContentAuthor", contentAuthor) :
-                new ObjectParameter("ContentAuthor", typeof(string));
-    
-            var feedIDParameter = feedID.HasValue ?
-                new ObjectParameter("FeedID", feedID) :
-                new ObjectParameter("FeedID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("WEBAPI_addContentSP", contentTitleParameter, contentBodyParameter, contentPostDateParameter, contentAuthorParameter, feedIDParameter);
-        }
-    
-        public virtual int WEBAPI_addFeed2UserSP(Nullable<int> feedID, Nullable<int> userID)
-        {
-            var feedIDParameter = feedID.HasValue ?
-                new ObjectParameter("FeedID", feedID) :
-                new ObjectParameter("FeedID", typeof(int));
-    
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("WEBAPI_addFeed2UserSP", feedIDParameter, userIDParameter);
-        }
-    
-        public virtual ObjectResult<Nullable<int>> WEBAPI_addFeedSP(string feedURL, string feedTitle)
-        {
-            var feedURLParameter = feedURL != null ?
-                new ObjectParameter("FeedURL", feedURL) :
-                new ObjectParameter("FeedURL", typeof(string));
-    
-            var feedTitleParameter = feedTitle != null ?
-                new ObjectParameter("FeedTitle", feedTitle) :
-                new ObjectParameter("FeedTitle", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("WEBAPI_addFeedSP", feedURLParameter, feedTitleParameter);
-        }
-    
-        public virtual int WEBAPI_markContentAsReadSP(Nullable<int> userID, Nullable<int> feed2ContentID, Nullable<int> feedID)
-        {
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            var feed2ContentIDParameter = feed2ContentID.HasValue ?
-                new ObjectParameter("Feed2ContentID", feed2ContentID) :
-                new ObjectParameter("Feed2ContentID", typeof(int));
-    
-            var feedIDParameter = feedID.HasValue ?
-                new ObjectParameter("FeedID", feedID) :
-                new ObjectParameter("FeedID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("WEBAPI_markContentAsReadSP", userIDParameter, feed2ContentIDParameter, feedIDParameter);
-        }
-    
-        public virtual int WEBAPI_removeUserFeedSP(Nullable<int> feedID, Nullable<int> userID)
-        {
-            var feedIDParameter = feedID.HasValue ?
-                new ObjectParameter("FeedID", feedID) :
-                new ObjectParameter("FeedID", typeof(int));
-    
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("WEBAPI_removeUserFeedSP", feedIDParameter, userIDParameter);
-        }
-    
-        public virtual ObjectResult<WEBAPI_getFeedListingSP_Result> WEBAPI_getFeedListingSP(Nullable<int> userID)
-        {
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WEBAPI_getFeedListingSP_Result>("WEBAPI_getFeedListingSP", userIDParameter);
-        }
-    
-        public virtual ObjectResult<WEBAPI_getContentListSP_Result> WEBAPI_getContentListSP(Nullable<int> userID, Nullable<int> feedID)
-        {
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            var feedIDParameter = feedID.HasValue ?
-                new ObjectParameter("FeedID", feedID) :
-                new ObjectParameter("FeedID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WEBAPI_getContentListSP_Result>("WEBAPI_getContentListSP", userIDParameter, feedIDParameter);
-        }
+        public virtual DbSet<Content> Contents { get; set; }
+        public virtual DbSet<Feed> Feeds { get; set; }
+        public virtual DbSet<Feeds2Content> Feeds2Content { get; set; }
+        public virtual DbSet<RowStatus> RowStatuses { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Users2Feeds2Content> Users2Feeds2Content { get; set; }
     }
 }

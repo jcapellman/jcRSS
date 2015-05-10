@@ -4,75 +4,275 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="jcRSSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <Function Name="WEBAPI_addContentSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ContentTitle" Type="varchar" Mode="In" />
-          <Parameter Name="ContentBody" Type="varchar(max)" Mode="In" />
-          <Parameter Name="ContentPostDate" Type="datetimeoffset" Mode="In" />
-          <Parameter Name="ContentAuthor" Type="varchar" Mode="In" />
-          <Parameter Name="FeedID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="WEBAPI_addFeed2UserSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="FeedID" Type="int" Mode="In" />
-          <Parameter Name="UserID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="WEBAPI_addFeedSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="FeedURL" Type="varchar(max)" Mode="In" />
-          <Parameter Name="FeedTitle" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="WEBAPI_getContentListSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="UserID" Type="int" Mode="In" />
-          <Parameter Name="FeedID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="WEBAPI_getFeedListingSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="UserID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="WEBAPI_markContentAsReadSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="UserID" Type="int" Mode="In" />
-          <Parameter Name="Feed2ContentID" Type="int" Mode="In" />
-          <Parameter Name="FeedID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="WEBAPI_removeUserFeedSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="FeedID" Type="int" Mode="In" />
-          <Parameter Name="UserID" Type="int" Mode="In" />
-        </Function>
-        <EntityContainer Name="jcRSSModelStoreContainer" />
+    <Schema Namespace="jcRSSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Content">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="RowStatusID" Type="int" Nullable="false" />
+          <Property Name="ContentTitle" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="ContentBody" Type="varchar(max)" Nullable="false" />
+          <Property Name="ContentPostAuthor" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Modified" Type="datetime" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ContentPostDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Feeds">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="RowStatusID" Type="int" Nullable="false" />
+          <Property Name="URL" Type="varchar(max)" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Modified" Type="datetime" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Feeds2Content">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="RowStatusID" Type="int" Nullable="false" />
+          <Property Name="ContentID" Type="int" Nullable="false" />
+          <Property Name="FeedID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Modified" Type="datetime" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RowStatuses">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Modified" Type="datetime" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="RowStatusID" Type="int" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Password" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IsConfirmed" Type="bit" Nullable="false" />
+          <Property Name="EmailAddress" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Modified" Type="datetime" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users2Feeds2Content">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Modified" Type="datetime" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="RowStatusID" Type="int" Nullable="false" />
+          <Property Name="Feeds2ContentID" Type="int" Nullable="false" />
+          <Property Name="HasRead" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Content_0">
+          <End Role="RowStatuses" Type="Self.RowStatuses" Multiplicity="1" />
+          <End Role="Content" Type="Self.Content" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RowStatuses">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Content">
+              <PropertyRef Name="RowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Feeds_0">
+          <End Role="RowStatuses" Type="Self.RowStatuses" Multiplicity="1" />
+          <End Role="Feeds" Type="Self.Feeds" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RowStatuses">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Feeds">
+              <PropertyRef Name="RowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Feeds2Content_0">
+          <End Role="RowStatuses" Type="Self.RowStatuses" Multiplicity="1" />
+          <End Role="Feeds2Content" Type="Self.Feeds2Content" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RowStatuses">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Feeds2Content">
+              <PropertyRef Name="RowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Feeds2Content_1">
+          <End Role="Content" Type="Self.Content" Multiplicity="1" />
+          <End Role="Feeds2Content" Type="Self.Feeds2Content" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Content">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Feeds2Content">
+              <PropertyRef Name="ContentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Feeds2Content_2">
+          <End Role="Feeds" Type="Self.Feeds" Multiplicity="1" />
+          <End Role="Feeds2Content" Type="Self.Feeds2Content" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Feeds">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Feeds2Content">
+              <PropertyRef Name="FeedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_0">
+          <End Role="RowStatuses" Type="Self.RowStatuses" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RowStatuses">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="RowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users2Feeds2Content_0">
+          <End Role="RowStatuses" Type="Self.RowStatuses" Multiplicity="1" />
+          <End Role="Users2Feeds2Content" Type="Self.Users2Feeds2Content" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RowStatuses">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Users2Feeds2Content">
+              <PropertyRef Name="RowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users2Feeds2Content_1">
+          <End Role="Feeds2Content" Type="Self.Feeds2Content" Multiplicity="1" />
+          <End Role="Users2Feeds2Content" Type="Self.Users2Feeds2Content" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Feeds2Content">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Users2Feeds2Content">
+              <PropertyRef Name="Feeds2ContentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users2Feeds2Content_2">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Users2Feeds2Content" Type="Self.Users2Feeds2Content" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Users2Feeds2Content">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="jcRSSModelStoreContainer">
+          <EntitySet Name="Content" EntityType="Self.Content" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Feeds" EntityType="Self.Feeds" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Feeds2Content" EntityType="Self.Feeds2Content" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RowStatuses" EntityType="Self.RowStatuses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users2Feeds2Content" EntityType="Self.Users2Feeds2Content" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Content_0" Association="Self.FK_Content_0">
+            <End Role="RowStatuses" EntitySet="RowStatuses" />
+            <End Role="Content" EntitySet="Content" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feeds_0" Association="Self.FK_Feeds_0">
+            <End Role="RowStatuses" EntitySet="RowStatuses" />
+            <End Role="Feeds" EntitySet="Feeds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feeds2Content_0" Association="Self.FK_Feeds2Content_0">
+            <End Role="RowStatuses" EntitySet="RowStatuses" />
+            <End Role="Feeds2Content" EntitySet="Feeds2Content" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feeds2Content_1" Association="Self.FK_Feeds2Content_1">
+            <End Role="Content" EntitySet="Content" />
+            <End Role="Feeds2Content" EntitySet="Feeds2Content" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feeds2Content_2" Association="Self.FK_Feeds2Content_2">
+            <End Role="Feeds" EntitySet="Feeds" />
+            <End Role="Feeds2Content" EntitySet="Feeds2Content" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_0" Association="Self.FK_Users_0">
+            <End Role="RowStatuses" EntitySet="RowStatuses" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users2Feeds2Content_0" Association="Self.FK_Users2Feeds2Content_0">
+            <End Role="RowStatuses" EntitySet="RowStatuses" />
+            <End Role="Users2Feeds2Content" EntitySet="Users2Feeds2Content" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users2Feeds2Content_1" Association="Self.FK_Users2Feeds2Content_1">
+            <End Role="Feeds2Content" EntitySet="Feeds2Content" />
+            <End Role="Users2Feeds2Content" EntitySet="Users2Feeds2Content" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users2Feeds2Content_2" Association="Self.FK_Users2Feeds2Content_2">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Users2Feeds2Content" EntitySet="Users2Feeds2Content" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="jcRSSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="jcRSSEntities" annotation:LazyLoadingEnabled="true" >
-          <FunctionImport Name="WEBAPI_addContentSP">
-            <Parameter Name="ContentTitle" Mode="In" Type="String" />
-            <Parameter Name="ContentBody" Mode="In" Type="String" />
-            <Parameter Name="ContentPostDate" Mode="In" Type="DateTimeOffset" />
-            <Parameter Name="ContentAuthor" Mode="In" Type="String" />
-            <Parameter Name="FeedID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="WEBAPI_addFeed2UserSP">
-            <Parameter Name="FeedID" Mode="In" Type="Int32" />
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="WEBAPI_addFeedSP" ReturnType="Collection(Int32)">
-            <Parameter Name="FeedURL" Mode="In" Type="String" />
-            <Parameter Name="FeedTitle" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="WEBAPI_markContentAsReadSP">
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
-            <Parameter Name="Feed2ContentID" Mode="In" Type="Int32" />
-            <Parameter Name="FeedID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="WEBAPI_removeUserFeedSP">
-            <Parameter Name="FeedID" Mode="In" Type="Int32" />
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="WEBAPI_getFeedListingSP" ReturnType="Collection(jcRSSModel.WEBAPI_getFeedListingSP_Result)">
-          <Parameter Name="UserID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="WEBAPI_getContentListSP" ReturnType="Collection(jcRSSModel.WEBAPI_getContentListSP_Result)">
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
-            <Parameter Name="FeedID" Mode="In" Type="Int32" />
-          </FunctionImport>
+          <EntitySet Name="Contents" EntityType="jcRSSModel.Content" />
+          <EntitySet Name="Feeds" EntityType="jcRSSModel.Feed" />
+          <EntitySet Name="Feeds2Content" EntityType="jcRSSModel.Feeds2Content" />
+          <EntitySet Name="RowStatuses" EntityType="jcRSSModel.RowStatus" />
+          <EntitySet Name="Users" EntityType="jcRSSModel.User" />
+          <EntitySet Name="Users2Feeds2Content" EntityType="jcRSSModel.Users2Feeds2Content" />
+          <AssociationSet Name="FK_Content_0" Association="jcRSSModel.FK_Content_0">
+            <End Role="RowStatus" EntitySet="RowStatuses" />
+            <End Role="Content" EntitySet="Contents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feeds2Content_1" Association="jcRSSModel.FK_Feeds2Content_1">
+            <End Role="Content" EntitySet="Contents" />
+            <End Role="Feeds2Content" EntitySet="Feeds2Content" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feeds_0" Association="jcRSSModel.FK_Feeds_0">
+            <End Role="RowStatus" EntitySet="RowStatuses" />
+            <End Role="Feed" EntitySet="Feeds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feeds2Content_2" Association="jcRSSModel.FK_Feeds2Content_2">
+            <End Role="Feed" EntitySet="Feeds" />
+            <End Role="Feeds2Content" EntitySet="Feeds2Content" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feeds2Content_0" Association="jcRSSModel.FK_Feeds2Content_0">
+            <End Role="RowStatus" EntitySet="RowStatuses" />
+            <End Role="Feeds2Content" EntitySet="Feeds2Content" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users2Feeds2Content_1" Association="jcRSSModel.FK_Users2Feeds2Content_1">
+            <End Role="Feeds2Content" EntitySet="Feeds2Content" />
+            <End Role="Users2Feeds2Content" EntitySet="Users2Feeds2Content" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_0" Association="jcRSSModel.FK_Users_0">
+            <End Role="RowStatus" EntitySet="RowStatuses" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users2Feeds2Content_0" Association="jcRSSModel.FK_Users2Feeds2Content_0">
+            <End Role="RowStatus" EntitySet="RowStatuses" />
+            <End Role="Users2Feeds2Content" EntitySet="Users2Feeds2Content" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users2Feeds2Content_2" Association="jcRSSModel.FK_Users2Feeds2Content_2">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Users2Feeds2Content" EntitySet="Users2Feeds2Content" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="WEBAPI_getFeedListingSP_Result">
           <Property Type="String" Name="Title" Nullable="false" MaxLength="255" />
@@ -86,37 +286,282 @@
           <Property Type="String" Name="ContentPostAuthor" Nullable="false" MaxLength="255" />
           <Property Type="DateTimeOffset" Name="ContentPostDate" Nullable="false" />
         </ComplexType>
+        <EntityType Name="Content">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="RowStatusID" Type="Int32" Nullable="false" />
+          <Property Name="ContentTitle" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ContentBody" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ContentPostAuthor" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Modified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ContentPostDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="RowStatus" Relationship="jcRSSModel.FK_Content_0" FromRole="Content" ToRole="RowStatus" />
+          <NavigationProperty Name="Feeds2Content" Relationship="jcRSSModel.FK_Feeds2Content_1" FromRole="Content" ToRole="Feeds2Content" />
+        </EntityType>
+        <EntityType Name="Feed">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="RowStatusID" Type="Int32" Nullable="false" />
+          <Property Name="URL" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Modified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="RowStatus" Relationship="jcRSSModel.FK_Feeds_0" FromRole="Feed" ToRole="RowStatus" />
+          <NavigationProperty Name="Feeds2Content" Relationship="jcRSSModel.FK_Feeds2Content_2" FromRole="Feed" ToRole="Feeds2Content" />
+        </EntityType>
+        <EntityType Name="Feeds2Content">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="RowStatusID" Type="Int32" Nullable="false" />
+          <Property Name="ContentID" Type="Int32" Nullable="false" />
+          <Property Name="FeedID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Modified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Content" Relationship="jcRSSModel.FK_Feeds2Content_1" FromRole="Feeds2Content" ToRole="Content" />
+          <NavigationProperty Name="Feed" Relationship="jcRSSModel.FK_Feeds2Content_2" FromRole="Feeds2Content" ToRole="Feed" />
+          <NavigationProperty Name="RowStatus" Relationship="jcRSSModel.FK_Feeds2Content_0" FromRole="Feeds2Content" ToRole="RowStatus" />
+          <NavigationProperty Name="Users2Feeds2Content" Relationship="jcRSSModel.FK_Users2Feeds2Content_1" FromRole="Feeds2Content" ToRole="Users2Feeds2Content" />
+        </EntityType>
+        <EntityType Name="RowStatus">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Modified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Contents" Relationship="jcRSSModel.FK_Content_0" FromRole="RowStatus" ToRole="Content" />
+          <NavigationProperty Name="Feeds" Relationship="jcRSSModel.FK_Feeds_0" FromRole="RowStatus" ToRole="Feed" />
+          <NavigationProperty Name="Feeds2Content" Relationship="jcRSSModel.FK_Feeds2Content_0" FromRole="RowStatus" ToRole="Feeds2Content" />
+          <NavigationProperty Name="Users" Relationship="jcRSSModel.FK_Users_0" FromRole="RowStatus" ToRole="User" />
+          <NavigationProperty Name="Users2Feeds2Content" Relationship="jcRSSModel.FK_Users2Feeds2Content_0" FromRole="RowStatus" ToRole="Users2Feeds2Content" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="RowStatusID" Type="Int32" Nullable="false" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="Guid" Nullable="false" />
+          <Property Name="IsConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="EmailAddress" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Modified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="RowStatus" Relationship="jcRSSModel.FK_Users_0" FromRole="User" ToRole="RowStatus" />
+          <NavigationProperty Name="Users2Feeds2Content" Relationship="jcRSSModel.FK_Users2Feeds2Content_2" FromRole="User" ToRole="Users2Feeds2Content" />
+        </EntityType>
+        <EntityType Name="Users2Feeds2Content">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Modified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RowStatusID" Type="Int32" Nullable="false" />
+          <Property Name="Feeds2ContentID" Type="Int32" Nullable="false" />
+          <Property Name="HasRead" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Feeds2Content" Relationship="jcRSSModel.FK_Users2Feeds2Content_1" FromRole="Users2Feeds2Content" ToRole="Feeds2Content" />
+          <NavigationProperty Name="RowStatus" Relationship="jcRSSModel.FK_Users2Feeds2Content_0" FromRole="Users2Feeds2Content" ToRole="RowStatus" />
+          <NavigationProperty Name="User" Relationship="jcRSSModel.FK_Users2Feeds2Content_2" FromRole="Users2Feeds2Content" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Content_0">
+          <End Type="jcRSSModel.RowStatus" Role="RowStatus" Multiplicity="1" />
+          <End Type="jcRSSModel.Content" Role="Content" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RowStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Content">
+              <PropertyRef Name="RowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Feeds2Content_1">
+          <End Type="jcRSSModel.Content" Role="Content" Multiplicity="1" />
+          <End Type="jcRSSModel.Feeds2Content" Role="Feeds2Content" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Content">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Feeds2Content">
+              <PropertyRef Name="ContentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Feeds_0">
+          <End Type="jcRSSModel.RowStatus" Role="RowStatus" Multiplicity="1" />
+          <End Type="jcRSSModel.Feed" Role="Feed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RowStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Feed">
+              <PropertyRef Name="RowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Feeds2Content_2">
+          <End Type="jcRSSModel.Feed" Role="Feed" Multiplicity="1" />
+          <End Type="jcRSSModel.Feeds2Content" Role="Feeds2Content" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Feed">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Feeds2Content">
+              <PropertyRef Name="FeedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Feeds2Content_0">
+          <End Type="jcRSSModel.RowStatus" Role="RowStatus" Multiplicity="1" />
+          <End Type="jcRSSModel.Feeds2Content" Role="Feeds2Content" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RowStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Feeds2Content">
+              <PropertyRef Name="RowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users2Feeds2Content_1">
+          <End Type="jcRSSModel.Feeds2Content" Role="Feeds2Content" Multiplicity="1" />
+          <End Type="jcRSSModel.Users2Feeds2Content" Role="Users2Feeds2Content" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Feeds2Content">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Users2Feeds2Content">
+              <PropertyRef Name="Feeds2ContentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_0">
+          <End Type="jcRSSModel.RowStatus" Role="RowStatus" Multiplicity="1" />
+          <End Type="jcRSSModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RowStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users2Feeds2Content_0">
+          <End Type="jcRSSModel.RowStatus" Role="RowStatus" Multiplicity="1" />
+          <End Type="jcRSSModel.Users2Feeds2Content" Role="Users2Feeds2Content" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RowStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Users2Feeds2Content">
+              <PropertyRef Name="RowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users2Feeds2Content_2">
+          <End Type="jcRSSModel.User" Role="User" Multiplicity="1" />
+          <End Type="jcRSSModel.Users2Feeds2Content" Role="Users2Feeds2Content" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Users2Feeds2Content">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="jcRSSModelStoreContainer" CdmEntityContainer="jcRSSEntities" >
-          <FunctionImportMapping FunctionImportName="WEBAPI_addContentSP" FunctionName="jcRSSModel.Store.WEBAPI_addContentSP" />
-          <FunctionImportMapping FunctionImportName="WEBAPI_addFeed2UserSP" FunctionName="jcRSSModel.Store.WEBAPI_addFeed2UserSP" />
-          <FunctionImportMapping FunctionImportName="WEBAPI_addFeedSP" FunctionName="jcRSSModel.Store.WEBAPI_addFeedSP" />
-          <FunctionImportMapping FunctionImportName="WEBAPI_markContentAsReadSP" FunctionName="jcRSSModel.Store.WEBAPI_markContentAsReadSP" />
-          <FunctionImportMapping FunctionImportName="WEBAPI_removeUserFeedSP" FunctionName="jcRSSModel.Store.WEBAPI_removeUserFeedSP" />
-          <FunctionImportMapping FunctionImportName="WEBAPI_getFeedListingSP" FunctionName="jcRSSModel.Store.WEBAPI_getFeedListingSP">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="jcRSSModel.WEBAPI_getFeedListingSP_Result">
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="NumUnread" ColumnName="NumUnread" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="WEBAPI_getContentListSP" FunctionName="jcRSSModel.Store.WEBAPI_getContentListSP">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="jcRSSModel.WEBAPI_getContentListSP_Result">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="ContentTitle" ColumnName="ContentTitle" />
-                <ScalarProperty Name="ContentBody" ColumnName="ContentBody" />
-                <ScalarProperty Name="ContentPostAuthor" ColumnName="ContentPostAuthor" />
+          <EntitySetMapping Name="Contents">
+            <EntityTypeMapping TypeName="jcRSSModel.Content">
+              <MappingFragment StoreEntitySet="Content">
                 <ScalarProperty Name="ContentPostDate" ColumnName="ContentPostDate" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Modified" ColumnName="Modified" />
+                <ScalarProperty Name="ContentPostAuthor" ColumnName="ContentPostAuthor" />
+                <ScalarProperty Name="ContentBody" ColumnName="ContentBody" />
+                <ScalarProperty Name="ContentTitle" ColumnName="ContentTitle" />
+                <ScalarProperty Name="RowStatusID" ColumnName="RowStatusID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Feeds">
+            <EntityTypeMapping TypeName="jcRSSModel.Feed">
+              <MappingFragment StoreEntitySet="Feeds">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Modified" ColumnName="Modified" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="RowStatusID" ColumnName="RowStatusID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Feeds2Content">
+            <EntityTypeMapping TypeName="jcRSSModel.Feeds2Content">
+              <MappingFragment StoreEntitySet="Feeds2Content">
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Modified" ColumnName="Modified" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FeedID" ColumnName="FeedID" />
+                <ScalarProperty Name="ContentID" ColumnName="ContentID" />
+                <ScalarProperty Name="RowStatusID" ColumnName="RowStatusID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RowStatuses">
+            <EntityTypeMapping TypeName="jcRSSModel.RowStatus">
+              <MappingFragment StoreEntitySet="RowStatuses">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Modified" ColumnName="Modified" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="jcRSSModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Modified" ColumnName="Modified" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="RowStatusID" ColumnName="RowStatusID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users2Feeds2Content">
+            <EntityTypeMapping TypeName="jcRSSModel.Users2Feeds2Content">
+              <MappingFragment StoreEntitySet="Users2Feeds2Content">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="HasRead" ColumnName="HasRead" />
+                <ScalarProperty Name="Feeds2ContentID" ColumnName="Feeds2ContentID" />
+                <ScalarProperty Name="RowStatusID" ColumnName="RowStatusID" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Modified" ColumnName="Modified" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
