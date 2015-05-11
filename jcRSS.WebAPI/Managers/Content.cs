@@ -13,9 +13,10 @@ namespace jcRSS.WebAPI.Managers {
 
         public List<ContentListingResponseItem> GetContentListing(int? feedID = null) {
             using (var eFactory = new jcEntityFactory()) {
-                var result = eFactory.WEBAPI_getContentListSP(_requestItem.UserID, feedID).ToList();
+                //     var result = eFactory.WEBAPI_getContentListSP(_requestItem.UserID, feedID).ToList();
 
-                return result.Select(a => new ContentListingResponseItem { Body = a.ContentBody, ContentFeedID = a.ID, Title = a.ContentTitle, PostDate = ConvertDateTimeOffset(a.ContentPostDate) }).ToList();
+                //   return result.Select(a => new ContentListingResponseItem { Body = a.ContentBody, ContentFeedID = a.ID, Title = a.ContentTitle, PostDate = ConvertDateTimeOffset(a.ContentPostDate) }).ToList();
+                return new List<ContentListingResponseItem>();
             }
         }
     }

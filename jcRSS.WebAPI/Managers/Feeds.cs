@@ -13,12 +13,14 @@ namespace jcRSS.WebAPI.Managers {
 
         public List<FeedListingResponseItem> GetListing() {
             using (var eFactory = new jcRSS.DataLayer.jcEntityFactory()) {
-                var result = eFactory.WEBAPI_getFeedListingSP(_requestItem.UserID).ToList();
+               /* var result = eFactory.WEBAPI_getFeedListingSP(_requestItem.UserID).ToList();
 
                 return result.Select(a => new FeedListingResponseItem { 
                     Title = a.Title, 
                     FeedID = a.ID, 
-                    NumUnread = a.NumUnread ?? 0}).ToList();
+                    NumUnread = a.NumUnread ?? 0}).ToList();*/
+
+            return new List<FeedListingResponseItem>();
             }
         }
     }

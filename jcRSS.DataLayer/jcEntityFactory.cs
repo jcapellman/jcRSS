@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace jcRSS.DataLayer {
-    public class jcEntityFactory : Entities.jcRSSEntities {
+    public class jcEntityFactory : Entities.jcRSSEntities
+    {
+
     }
 }
