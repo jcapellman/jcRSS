@@ -64,6 +64,16 @@
                         </RadioButton.Tag>
                     </RadioButton>
                     
+
+                    <RadioButton Command="{Binding NavCommand}" Content="Manage Feeds" GroupName="Nav">
+                        <RadioButton.CommandParameter>
+                            <views1:NavType Type="views1:ManageFeedsPage" />
+                        </RadioButton.CommandParameter>
+                        <RadioButton.Tag>
+                            <TextBlock Text="" />
+                        </RadioButton.Tag>
+                    </RadioButton>
+
                     <!-- about -->
                     <RadioButton Command="{Binding NavCommand}" Content="About" GroupName="Nav">
                         <RadioButton.CommandParameter>

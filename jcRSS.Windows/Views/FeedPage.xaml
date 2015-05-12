@@ -21,10 +21,10 @@
                 </GridView.ItemsPanel>
 
                 <GridView.ItemTemplate>
-                    <DataTemplate x:DataType="localObjects:ContentListingResponseItem">
+                    <DataTemplate>
                         <RelativePanel Margin="10,10,10,10">
-                            <TextBlock Margin="10,10,0,0" RelativePanel.AlignTopWithPanel="True" x:Name="tbDescription" FontSize="30" Text="{x:Bind Title}" />
-                            <TextBlock Margin="10,0,0,10" RelativePanel.AlignBottomWithPanel="True" FontSize="20" Text="{x:Bind Body}" />
+                            <TextBlock Margin="10,10,0,0" RelativePanel.AlignTopWithPanel="True" x:Name="tbDescription" FontSize="30" Text="{Binding Title}" />
+                            <TextBlock Margin="10,0,0,10" RelativePanel.AlignBottomWithPanel="True" FontSize="20" Text="{Binding Body}" />
                         </RelativePanel>
                     </DataTemplate>
                 </GridView.ItemTemplate>

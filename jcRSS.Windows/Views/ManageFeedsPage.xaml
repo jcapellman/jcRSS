@@ -1,0 +1,35 @@
+﻿<Page
+    x:Class="jcRSS.WindowsUniversal.Views.ManageFeedsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:jcRSS.WindowsUniversal.Views"
+    xmlns:objects="using:jcRSS.WindowsUniversal.Objects"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="using:jcRSS.WindowsUniversal.ViewModels"
+    mc:Ignorable="d">
+    
+    <Pivot>
+        <Pivot.Background>
+            <ImageBrush ImageSource="/Assets/background.jpg" Opacity="0.5" />
+        </Pivot.Background>
+        
+        <PivotItem Header="Manage Feeds">
+            <ListView ItemsSource="{Binding Feeds}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            
+                            <TextBlock Grid.Row="0" FontSize="30" Text="{Binding Name}" />
+                            <TextBlock Grid.Row="1" FontSize="30" Text="{Binding URL}" />
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </PivotItem>
+    </Pivot>
+</Page>

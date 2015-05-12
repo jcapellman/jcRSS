@@ -99,17 +99,23 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\Commands.cs" />
+    <Compile Include="Objects\FeedContentItem.cs" />
+    <Compile Include="Objects\FeedItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\INavigatable.cs" />
     <Compile Include="Services\NavigationEventArgs.cs" />
     <Compile Include="Services\NavigationFacade.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="ViewModels\FeedModel.cs" />
+    <Compile Include="ViewModels\ManageFeedsModel.cs" />
     <Compile Include="Views\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\FeedPage.xaml.cs">
       <DependentUpon>FeedPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ManageFeedsPage.xaml.cs">
+      <DependentUpon>ManageFeedsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
@@ -155,6 +161,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\ManageFeedsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -165,6 +175,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=x86" />
     <Reference Include="System.Numerics.Vectors, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Numerics.Vectors.4.0.0\lib\win8\System.Numerics.Vectors.dll</HintPath>
       <Private>True</Private>
@@ -173,12 +184,6 @@
       <HintPath>..\packages\System.Numerics.Vectors.4.0.0\lib\win8\System.Numerics.Vectors.WindowsRuntime.dll</HintPath>
       <Private>True</Private>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\jcRSS.PCL\jcRSS.PCL.csproj">
-      <Project>{AEAECBFC-AF4B-4FCA-80EB-A5091ABBEB4A}</Project>
-      <Name>jcRSS.PCL</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
