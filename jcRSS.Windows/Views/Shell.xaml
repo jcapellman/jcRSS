@@ -8,24 +8,19 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-
         <ResourceDictionary>
-
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Styles/SplitViewStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <Style TargetType="TextBlock" BasedOn="{StaticResource SplitViewTextBlockStyle}" />
             <Style TargetType="RadioButton" BasedOn="{StaticResource SplitViewRadioButtonStyle}" />
-
         </ResourceDictionary>
-
     </Page.Resources>
 
     <SplitView x:Name="ShellSplitView">
         <SplitView.Pane>
             <Grid Background="{StaticResource SplitViewBackgroundBrush}">
-
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
@@ -34,15 +29,12 @@
 
                 <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
                     <StackPanel>
-
-                        <!-- back -->
                         <RadioButton Checked="DontCheck" Command="{Binding BackCommand}"  Background="{StaticResource SystemControlBackgroundAccentBrush}">
                             <RadioButton.Tag>
                                 <TextBlock Text="{StaticResource BackButtonText}" FontSize="{StaticResource SplitViewLargeNavFontSize}" />
                             </RadioButton.Tag>
                         </RadioButton>
 
-                        <!-- hamburger -->
                         <RadioButton Checked="DontCheck" Command="{Binding MenuCommand}">
                             <RadioButton.Tag>
                                 <TextBlock Text="{StaticResource MenuButtonText}" FontSize="{StaticResource SplitViewLargeNavFontSize}" />

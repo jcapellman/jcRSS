@@ -12,7 +12,7 @@
             <ImageBrush ImageSource="/Assets/background.jpg" Opacity="0.5" />
         </Hub.Background>
         
-        <HubSection Width="550" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+        <HubSection MaxWidth="550" ScrollViewer.VerticalScrollBarVisibility="Hidden">
             <DataTemplate>
                 <TextBlock TextWrapping="Wrap" FontSize="16">
                     An open source Universal Windows Application for RSS Feeds.
