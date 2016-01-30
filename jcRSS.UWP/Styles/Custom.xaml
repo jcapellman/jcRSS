@@ -5,7 +5,12 @@
     <x:Double x:Key="NarrowMinWidth">0</x:Double>
     <x:Double x:Key="NormalMinWidth">521</x:Double>
     <x:Double x:Key="WideMinWidth">1200</x:Double>
-
+    
+    <!-- Feed Listing -->
+    <x:Double x:Key="FeedListing_Header_FontSize">24</x:Double>
+    <x:Double x:Key="FeedListing_Body_FontSize">20</x:Double>
+    <x:Double x:Key="FeedListing_Footer_FontSize">16</x:Double>
+    
     <Color x:Key="CustomColor">#1e1e1e</Color>
     <SolidColorBrush x:Key="CustomColorBrush" Color="{StaticResource CustomColor}" />
 
@@ -41,6 +46,21 @@
                 <Setter Property="GrabberBrush" Value="{ThemeResource CustomColorBrush}" />
                 <Setter Property="GrabberVisibility" Value="Visible" />
             </Style>
+            
+            <Style TargetType="TextBlock" x:Key="FeedListing_Header">
+                <Setter Property="FontSize" Value="{ThemeResource FeedListing_Header_FontSize}" />
+                <Setter Property="Foreground" Value="Black" />
+            </Style>
+            
+            <Style TargetType="TextBlock" x:Key="FeedListing_Body">
+                <Setter Property="FontSize" Value="{ThemeResource FeedListing_Body_FontSize}" />
+                <Setter Property="Foreground" Value="Gray" />
+            </Style>
+
+            <Style TargetType="TextBlock" x:Key="FeedListing_Footer">
+                <Setter Property="FontSize" Value="{ThemeResource FeedListing_Footer_FontSize}" />
+                <Setter Property="Foreground" Value="#0078d7" />
+            </Style>
 
         </ResourceDictionary>
 
@@ -73,6 +93,20 @@
                 <Setter Property="GrabberVisibility" Value="Visible" />
             </Style>
 
+            <Style TargetType="TextBlock" x:Key="FeedListing_Header">
+                <Setter Property="FontSize" Value="{ThemeResource FeedListing_Header_FontSize}" />
+                <Setter Property="Foreground" Value="White" />
+            </Style>
+            
+            <Style TargetType="TextBlock" x:Key="FeedListing_Body">
+                <Setter Property="FontSize" Value="{ThemeResource FeedListing_Body_FontSize}" />
+                <Setter Property="Foreground" Value="Gray" />
+            </Style>
+
+            <Style TargetType="TextBlock" x:Key="FeedListing_Footer">
+                <Setter Property="FontSize" Value="{ThemeResource FeedListing_Footer_FontSize}" />
+                <Setter Property="Foreground" Value="#0078d7" />
+            </Style>
         </ResourceDictionary>
 
         <!--  RequestedTheme=HighContrast  -->
@@ -110,6 +144,20 @@
                 <Setter Property="GrabberVisibility" Value="Visible" />
             </Style>
 
+            <Style TargetType="TextBlock" x:Key="FeedListing_Header">
+                <Setter Property="FontSize" Value="{ThemeResource FeedListing_Header_FontSize}" />
+                <Setter Property="Foreground" Value="White" />
+            </Style>
+            
+            <Style TargetType="TextBlock" x:Key="FeedListing_Body">
+                <Setter Property="FontSize" Value="{ThemeResource FeedListing_Body_FontSize}" />
+                <Setter Property="Foreground" Value="Gray" />
+            </Style>
+
+            <Style TargetType="TextBlock" x:Key="FeedListing_Footer">
+                <Setter Property="FontSize" Value="{ThemeResource FeedListing_Footer_FontSize}" />
+                <Setter Property="Foreground" Value="#0078d7" />
+            </Style>
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>

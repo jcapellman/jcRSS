@@ -1,43 +1,42 @@
-using Template10.Mvvm;
+using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using Template10.Services.NavigationService;
+
 using Windows.UI.Xaml.Navigation;
+
+using Template10.Mvvm;
+
+using jcRSS.PCL.Objects.Feeds;
 
 namespace jcRSS.UWP.ViewModels {
     public class MainPageViewModel : ViewModelBase {
-        public MainPageViewModel() {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled) {
-                Value = "Designtime value";
-            }
-        }
+        private ObservableCollection<FeedListingItem> _feedListing;
 
-        string _Value = string.Empty;
-        public string Value { get { return _Value; } set { Set(ref _Value, value); } }
+        public ObservableCollection<FeedListingItem> FeedListing {
+            get {  return _feedListing; }
+            set { _feedListing = value; RaisePropertyChanged("FeedListing"); }
+        } 
+
+        public MainPageViewModel() { }
+
+        private int _feedID;
 
         public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state) {
-            if (state.Any()) {
-                Value = state[nameof(Value)]?.ToString();
-                state.Clear();
-            }
+            FeedListing = new ObservableCollection<FeedListingItem> {
+                new FeedListingItem {
+                    FeedSiteTitle = "Jarred Capellman",
+                    PostTime = DateTime.Now.AddDays(-3),
+                    ShortDescription = "This release is the best yet.",
+                    Title = "jcRSS Released"
+                }
+            };
+
             return Task.CompletedTask;
         }
-
-        public override Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending) {
-            if (suspending) {
-                state[nameof(Value)] = Value;
-            }
-            return Task.CompletedTask;
-        }
-
-        public override Task OnNavigatingFromAsync(NavigatingEventArgs args) {
-            args.Cancel = false;
-            return Task.CompletedTask;
-        }
-
+        
         public void GotoDetailsPage() =>
-            NavigationService.Navigate(typeof(Views.DetailPage), Value);
+            NavigationService.Navigate(typeof(Views.DetailPage), _feedID);
 
         public void GotoSettings() =>
             NavigationService.Navigate(typeof(Views.SettingsPage), 0);
@@ -50,4 +49,3 @@ namespace jcRSS.UWP.ViewModels {
 
     }
 }
-

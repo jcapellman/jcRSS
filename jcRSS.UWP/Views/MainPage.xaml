@@ -8,12 +8,19 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:jcRSS.UWP.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:vm="using:jcRSS.UWP.ViewModels" mc:Ignorable="d">
+      xmlns:vm="using:jcRSS.UWP.ViewModels"
+      xmlns:feeds="using:jcRSS.PCL.Objects.Feeds"
+      xmlns:converters="using:jcRSS.UWP.Converters"
+      mc:Ignorable="d">
 
     <Page.DataContext>
         <vm:MainPageViewModel x:Name="ViewModel" />
     </Page.DataContext>
 
+    <Page.Resources>
+        <converters:FeedListingFooterConverter x:Key="FeedListingFooterConverter" />
+    </Page.Resources>
+    
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <VisualStateManager.VisualStateGroups>
@@ -51,7 +58,7 @@
         </Grid.RowDefinitions>
 
         <!--  page header  -->
-        <controls:PageHeader Content="Main Page">
+        <controls:PageHeader Content="Feed">
             <controls:PageHeader.SecondaryCommands>
                 <AppBarButton Click="{x:Bind ViewModel.GotoSettings}" Label="Settings" />
                 <AppBarButton Click="{x:Bind ViewModel.GotoPrivacy}" Label="Privacy" />
@@ -59,31 +66,22 @@
             </controls:PageHeader.SecondaryCommands>
         </controls:PageHeader>
 
-        <!--  page content  -->
-        <StackPanel Grid.Row="1" VerticalAlignment="Top" Orientation="Horizontal"
-                    Padding="12,8,0,0">
+        <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.FeedListing}" VerticalAlignment="Top">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="feeds:FeedListingItem">
+                    <Grid Margin="5,5,5,5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
 
-            <controls:Resizer>
-                <TextBox Width="200" MinWidth="200" MinHeight="60"
-                         Margin="0" Header="Parameter to pass"
-                         Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         TextWrapping="Wrap">
-                    <Interactivity:Interaction.Behaviors>
-                        <Behaviors:TextBoxEnterKeyBehavior>
-                            <Core:CallMethodAction MethodName="GotoDetailsPage" TargetObject="{Binding}" />
-                        </Behaviors:TextBoxEnterKeyBehavior>
-                        <Core:EventTriggerBehavior>
-                            <Behaviors:FocusAction />
-                        </Core:EventTriggerBehavior>
-                    </Interactivity:Interaction.Behaviors>
-                </TextBox>
-            </controls:Resizer>
-
-            <Button Margin="12,0" VerticalAlignment="Bottom"
-                    Click="{x:Bind ViewModel.GotoDetailsPage}" Content="Submit" />
-
-        </StackPanel>
-
+                        <TextBlock Text="{x:Bind Title}" Style="{StaticResource FeedListing_Header}" Grid.Row="0" />
+                        <TextBlock Text="{x:Bind ShortDescription}" Style="{StaticResource FeedListing_Body}" Grid.Row="1" />
+                        <TextBlock Text="{Binding Mode=OneTime, Converter={StaticResource FeedListingFooterConverter}, ConverterParameter='({0})'}" Style="{StaticResource FeedListing_Footer}" Grid.Row="2" />
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>
-
