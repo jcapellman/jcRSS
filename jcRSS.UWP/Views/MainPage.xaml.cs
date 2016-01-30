@@ -1,14 +1,12 @@
-using Windows.UI.Xaml.Controls;
 using jcRSS.UWP.ViewModels;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace jcRSS.UWP.Views {
     public sealed partial class MainPage : Page {
         public MainPage() {
             InitializeComponent();
-            NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Disabled;
+            NavigationCacheMode = NavigationCacheMode.Enabled;
         }
-
-        // strongly-typed view models enable x:bind
-        public MainPageViewModel ViewModel => this.DataContext as MainPageViewModel;
     }
 }

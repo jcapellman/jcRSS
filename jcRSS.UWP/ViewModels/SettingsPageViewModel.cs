@@ -1,13 +1,14 @@
 using System;
+using Template10.Mvvm;
 using Windows.UI.Xaml;
 
 namespace jcRSS.UWP.ViewModels {
-    public class SettingsPageViewModel : jcRSS.UWP.Mvvm.ViewModelBase {
+    public class SettingsPageViewModel : ViewModelBase {
         public SettingsPartViewModel SettingsPartViewModel { get; } = new SettingsPartViewModel();
         public AboutPartViewModel AboutPartViewModel { get; } = new AboutPartViewModel();
     }
 
-    public class SettingsPartViewModel : Mvvm.ViewModelBase {
+    public class SettingsPartViewModel : ViewModelBase {
         Services.SettingsServices.SettingsService _settings;
 
         public SettingsPartViewModel() {
@@ -43,7 +44,7 @@ namespace jcRSS.UWP.ViewModels {
         }
     }
 
-    public class AboutPartViewModel : Mvvm.ViewModelBase {
+    public class AboutPartViewModel : ViewModelBase {
         public Uri Logo => Windows.ApplicationModel.Package.Current.Logo;
 
         public string DisplayName => Windows.ApplicationModel.Package.Current.DisplayName;
@@ -54,8 +55,8 @@ namespace jcRSS.UWP.ViewModels {
         {
             get
             {
-                var ver = Windows.ApplicationModel.Package.Current.Id.Version;
-                return ver.Major.ToString() + "." + ver.Minor.ToString() + "." + ver.Build.ToString() + "." + ver.Revision.ToString();
+                var v = Windows.ApplicationModel.Package.Current.Id.Version;
+                return $"{v.Major}.{v.Minor}.{v.Build}.{v.Revision}";
             }
         }
 

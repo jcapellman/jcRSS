@@ -1,6 +1,6 @@
+using jcRSS.UWP.ViewModels;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Controls;
-using jcRSS.UWP.ViewModels;
 
 namespace jcRSS.UWP.Views {
     public sealed partial class DetailPage : Page {
@@ -8,9 +8,6 @@ namespace jcRSS.UWP.Views {
             InitializeComponent();
             NavigationCacheMode = NavigationCacheMode.Disabled;
         }
-
-        // strongly-typed view models enable x:bind
-        public DetailPageViewModel ViewModel => DataContext as DetailPageViewModel;
     }
 }
 

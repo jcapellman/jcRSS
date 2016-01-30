@@ -7,13 +7,17 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:jcRSS.UWP.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:views="using:jcRSS.UWP.Views" mc:Ignorable="d">
+      xmlns:views="using:jcRSS.UWP.Views"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+      mc:Ignorable="d">
 
-    <Controls:ModalDialog IsModal="{x:Bind IsBusy, Mode=OneWay}">
+    <Controls:ModalDialog x:Name="ModalContainer" CanBackButtonDismiss="False"
+                          DisableBackButtonWhenModal="True">
         <Controls:ModalDialog.Content>
-            <Controls:HamburgerMenu x:Name="MyHamburgerMenu" IsFullScreen="False">
+            <Controls:HamburgerMenu x:Name="MyHamburgerMenu">
 
                 <Controls:HamburgerMenu.PrimaryButtons>
+                    <!--  mainpage button  -->
                     <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MainPage">
                         <StackPanel Orientation="Horizontal">
                             <SymbolIcon Width="48" Height="48" Symbol="Home" />
@@ -23,7 +27,11 @@
                 </Controls:HamburgerMenu.PrimaryButtons>
 
                 <Controls:HamburgerMenu.SecondaryButtons>
-                    <Controls:HamburgerButtonInfo PageType="views:SettingsPage">
+                    <!--  settingspage button  -->
+                    <Controls:HamburgerButtonInfo x:Name="SettingsButton" PageType="views:SettingsPage">
+                        <Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                            <SuppressNavigationTransitionInfo />
+                        </Controls:HamburgerButtonInfo.NavigationTransitionInfo>
                         <StackPanel Orientation="Horizontal">
                             <SymbolIcon Width="48" Height="48" Symbol="Setting" />
                             <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Settings" />
@@ -32,20 +40,12 @@
                 </Controls:HamburgerMenu.SecondaryButtons>
 
             </Controls:HamburgerMenu>
-
         </Controls:ModalDialog.Content>
+
         <Controls:ModalDialog.ModalContent>
-
-            <Viewbox Height="32">
-                <StackPanel Orientation="Horizontal">
-                    <ProgressRing Width="16" Height="16"
-                                  Margin="12,0" Foreground="White"
-                                  IsActive="{x:Bind IsBusy, Mode=OneWay}" />
-                    <TextBlock VerticalAlignment="Center" Foreground="White" Text="{x:Bind BusyText, Mode=OneWay}" />
-                </StackPanel>
-            </Viewbox>
-
+            <views:Busy x:Name="BusyView" />
         </Controls:ModalDialog.ModalContent>
+
     </Controls:ModalDialog>
 
 </Page>
