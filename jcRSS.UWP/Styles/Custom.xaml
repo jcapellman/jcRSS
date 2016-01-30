@@ -18,55 +18,6 @@
     <SolidColorBrush x:Key="ContrastColorBrush" Color="{StaticResource ContrastColor}" />
 
     <ResourceDictionary.ThemeDictionaries>
-
-        <!--  RequestedTheme=Light  -->
-
-        <ResourceDictionary x:Key="Light">
-
-            <SolidColorBrush x:Key="ExtendedSplashBackground" Color="{ThemeResource ContrastColor}" />
-            <SolidColorBrush x:Key="ExtendedSplashForeground" Color="{ThemeResource CustomColor}" />
-
-            <SolidColorBrush x:Key="ModalBackground" Opacity=".5" Color="{ThemeResource CustomColor}" />
-
-            <Style TargetType="controls:HamburgerMenu">
-                <Setter Property="AccentColor" Value="{ThemeResource CustomColor}" />
-                <Setter Property="VisualStateNarrowMinWidth" Value="{ThemeResource NarrowMinWidth}" />
-                <Setter Property="VisualStateNormalMinWidth" Value="{ThemeResource NormalMinWidth}" />
-                <Setter Property="VisualStateWideMinWidth" Value="{ThemeResource WideMinWidth}" />
-            </Style>
-
-            <Style TargetType="controls:PageHeader">
-                <Setter Property="Background" Value="{ThemeResource CustomColorBrush}" />
-                <Setter Property="Foreground" Value="{ThemeResource ContrastColorBrush}" />
-                <Setter Property="VisualStateNarrowMinWidth" Value="{ThemeResource NarrowMinWidth}" />
-                <Setter Property="VisualStateNormalMinWidth" Value="{ThemeResource NormalMinWidth}" />
-            </Style>
-
-            <Style TargetType="controls:Resizer">
-                <Setter Property="GrabberBrush" Value="{ThemeResource CustomColorBrush}" />
-                <Setter Property="GrabberVisibility" Value="Visible" />
-            </Style>
-            
-            <Style TargetType="TextBlock" x:Key="FeedListing_Header">
-                <Setter Property="FontSize" Value="{ThemeResource FeedListing_Header_FontSize}" />
-                <Setter Property="Foreground" Value="Black" />
-            </Style>
-            
-            <Style TargetType="TextBlock" x:Key="FeedListing_Body">
-                <Setter Property="FontSize" Value="{ThemeResource FeedListing_Body_FontSize}" />
-                <Setter Property="Foreground" Value="Gray" />
-            </Style>
-
-            <Style TargetType="TextBlock" x:Key="FeedListing_Footer">
-                <Setter Property="FontSize" Value="{ThemeResource FeedListing_Footer_FontSize}" />
-                <Setter Property="Foreground" Value="#0078d7" />
-            </Style>
-
-        </ResourceDictionary>
-
-        <!--  RequestedTheme=Dark  -->
-        <!--  Please note the Template 10 default is Light (the current, Microsoft standard)  -->
-
         <ResourceDictionary x:Key="Default">
 
             <SolidColorBrush x:Key="ExtendedSplashBackground" Color="{ThemeResource ContrastColor}" />
@@ -97,58 +48,7 @@
                 <Setter Property="FontSize" Value="{ThemeResource FeedListing_Header_FontSize}" />
                 <Setter Property="Foreground" Value="White" />
             </Style>
-            
-            <Style TargetType="TextBlock" x:Key="FeedListing_Body">
-                <Setter Property="FontSize" Value="{ThemeResource FeedListing_Body_FontSize}" />
-                <Setter Property="Foreground" Value="Gray" />
-            </Style>
 
-            <Style TargetType="TextBlock" x:Key="FeedListing_Footer">
-                <Setter Property="FontSize" Value="{ThemeResource FeedListing_Footer_FontSize}" />
-                <Setter Property="Foreground" Value="#0078d7" />
-            </Style>
-        </ResourceDictionary>
-
-        <!--  RequestedTheme=HighContrast  -->
-
-        <ResourceDictionary x:Key="HighContrast">
-
-            <SolidColorBrush x:Key="ExtendedSplashBackground" Color="Black" />
-            <SolidColorBrush x:Key="ExtendedSplashForeground" Color="White" />
-
-            <SolidColorBrush x:Key="ModalBackground" Color="Black" />
-
-            <Style TargetType="controls:HamburgerMenu">
-                <Setter Property="HamburgerBackground" Value="Black" />
-                <Setter Property="HamburgerForeground" Value="White" />
-                <Setter Property="NavAreaBackground" Value="Black" />
-                <Setter Property="NavButtonBackground" Value="White" />
-                <Setter Property="NavButtonCheckedBackground" Value="White" />
-                <Setter Property="NavButtonForeground" Value="Black" />
-                <Setter Property="NavButtonHoverBackground" Value="White" />
-                <Setter Property="SecondarySeparator" Value="White" />
-                <Setter Property="VisualStateNarrowMinWidth" Value="{ThemeResource NarrowMinWidth}" />
-                <Setter Property="VisualStateNormalMinWidth" Value="{ThemeResource NormalMinWidth}" />
-                <Setter Property="VisualStateWideMinWidth" Value="{ThemeResource WideMinWidth}" />
-            </Style>
-
-            <Style TargetType="controls:PageHeader">
-                <Setter Property="Background" Value="Black" />
-                <Setter Property="Foreground" Value="White" />
-                <Setter Property="VisualStateNarrowMinWidth" Value="{ThemeResource NarrowMinWidth}" />
-                <Setter Property="VisualStateNormalMinWidth" Value="{ThemeResource NormalMinWidth}" />
-            </Style>
-
-            <Style TargetType="controls:Resizer">
-                <Setter Property="GrabberBrush" Value="White" />
-                <Setter Property="GrabberVisibility" Value="Visible" />
-            </Style>
-
-            <Style TargetType="TextBlock" x:Key="FeedListing_Header">
-                <Setter Property="FontSize" Value="{ThemeResource FeedListing_Header_FontSize}" />
-                <Setter Property="Foreground" Value="White" />
-            </Style>
-            
             <Style TargetType="TextBlock" x:Key="FeedListing_Body">
                 <Setter Property="FontSize" Value="{ThemeResource FeedListing_Body_FontSize}" />
                 <Setter Property="Foreground" Value="Gray" />

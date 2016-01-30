@@ -1,16 +1,16 @@
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 using Windows.UI.Xaml.Navigation;
 
-using Template10.Mvvm;
-
+using jcRSS.PCL.Enums;
 using jcRSS.PCL.Objects.Feeds;
 
+using Template10.Utils;
+
 namespace jcRSS.UWP.ViewModels {
-    public class MainPageViewModel : ViewModelBase {
+    public class MainPageViewModel : BaseViewModel {
         private ObservableCollection<FeedListingItem> _feedListing;
 
         public ObservableCollection<FeedListingItem> FeedListing {
@@ -22,17 +22,32 @@ namespace jcRSS.UWP.ViewModels {
 
         private int _feedID;
 
-        public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state) {
-            FeedListing = new ObservableCollection<FeedListingItem> {
-                new FeedListingItem {
-                    FeedSiteTitle = "Jarred Capellman",
-                    PostTime = DateTime.Now.AddDays(-3),
-                    ShortDescription = "This release is the best yet.",
-                    Title = "jcRSS Released"
-                }
-            };
+        public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state) {
+            var feeds = await _FileSystem.GetFile<FeedList>(FILE_TYPES.FEED_LIST);
 
-            return Task.CompletedTask;
+            var feedList = new FeedList();
+
+            if (feeds.HasError) {
+                feedList = new FeedList {
+                    FeedSites = new List<FeedSiteItem> {
+                        new FeedSiteItem {
+                            ID = 1,
+                            Title = "Jarred Capellman",
+                            URL = "http://www.jarredcapellman.com/rss.xml"
+                        }
+                    }
+                };
+
+                await _FileSystem.WriteFile(FILE_TYPES.FEED_LIST, feedList);
+            } else {
+                feedList = feeds.Value;
+            }
+
+            FeedListing = new ObservableCollection<FeedListingItem>();
+
+            foreach (var feed in feedList.FeedSites) {
+                FeedListing.AddRange(await _rssClient.GetFeeds(feed.URL));
+            }
         }
         
         public void GotoDetailsPage() =>
