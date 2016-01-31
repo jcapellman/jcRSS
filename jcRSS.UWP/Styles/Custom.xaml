@@ -58,6 +58,11 @@
                 <Setter Property="FontSize" Value="{ThemeResource FeedListing_Footer_FontSize}" />
                 <Setter Property="Foreground" Value="#0078d7" />
             </Style>
+            
+            <Style TargetType="TextBlock" x:Key="FeedDetail_Body">
+                <Setter Property="FontSize" Value="{ThemeResource FeedListing_Body_FontSize}" />
+                <Setter Property="Foreground" Value="Gray" />
+            </Style>
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>

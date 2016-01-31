@@ -15,7 +15,6 @@
     </Page.DataContext>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
                 <VisualState x:Name="VisualStateNarrow">
@@ -51,7 +50,7 @@
         </Grid.RowDefinitions>
 
         <!--  header  -->
-        <controls:PageHeader Frame="{x:Bind Frame}" Text="Detail Page">
+        <controls:PageHeader Frame="{x:Bind Frame}" Text="{x:Bind ViewModel.FeedItem.Title}">
             <Interactivity:Interaction.Behaviors>
                 <Behaviors:EllipsisBehavior Visibility="Auto" />
             </Interactivity:Interaction.Behaviors>
@@ -59,14 +58,7 @@
 
         <!--  content  -->
         <Grid Grid.Row="1">
-            <ScrollViewer Padding="12,8,0,0" VerticalScrollBarVisibility="Auto">
-                <StackPanel>
-                    <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="You passed:" />
-                    <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="{x:Bind ViewModel.Value, Mode=OneWay, FallbackValue=DesigntimeValue}" />
-                </StackPanel>
-            </ScrollViewer>
+            <WebView x:Name="wvMain" Source="{x:Bind ViewModel.FeedItem.URL}" />
         </Grid>
-
     </Grid>
 </Page>
-

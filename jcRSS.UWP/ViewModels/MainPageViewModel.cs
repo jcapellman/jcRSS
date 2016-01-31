@@ -21,7 +21,12 @@ namespace jcRSS.UWP.ViewModels {
 
         public MainPageViewModel() { }
 
-        private int _feedID;
+        private FeedListingItem _selectedFeedListingItem;
+
+        public FeedListingItem SelectedFeedListingItem {
+            get {  return _selectedFeedListingItem; }
+            set { _selectedFeedListingItem = value; RaisePropertyChanged("SelectedFeedListingItem"); if (value != null) { GotoDetailsPage(); } }
+        }
 
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state) {
             var feeds = await _FileSystem.GetFile<FeedList>(FILE_TYPES.FEED_LIST);
@@ -54,7 +59,7 @@ namespace jcRSS.UWP.ViewModels {
         }
         
         public void GotoDetailsPage() =>
-            NavigationService.Navigate(typeof(Views.DetailPage), _feedID);
+            NavigationService.Navigate(typeof(Views.DetailPage), SelectedFeedListingItem);
 
         public void GotoSettings() =>
             NavigationService.Navigate(typeof(Views.SettingsPage), 0);

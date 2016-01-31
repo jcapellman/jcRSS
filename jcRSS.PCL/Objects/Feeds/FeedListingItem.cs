@@ -14,5 +14,8 @@ namespace jcRSS.PCL.Objects.Feeds {
 
         [DataMember]
         public DateTime PostTime { get; set; }
+
+        [DataMember]
+        public string URL { get; set; }
     }
 }

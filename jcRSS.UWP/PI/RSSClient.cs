@@ -15,8 +15,8 @@ namespace jcRSS.UWP.PI {
 
             var feeds = await feedClient.RetrieveFeedAsync(new Uri(feedURL));
 
-            return feeds.Items.Select(feed => new FeedListingItem {
-                FeedSiteTitle = feeds.Title?.Text ?? string.Empty, PostTime = feed.PublishedDate.DateTime, ShortDescription = feed.Summary?.Text ?? string.Empty, Title = feed.Title?.Text ?? string.Empty
+            return feeds.Items.Where(a => a.Links != null && a.Links.Any()).Select(feed => new FeedListingItem {
+                FeedSiteTitle = feeds.Title?.Text ?? string.Empty, PostTime = feed.PublishedDate.DateTime, ShortDescription = feed.Summary?.Text ?? string.Empty, Title = feed.Title?.Text ?? string.Empty, URL = feed.Links.FirstOrDefault().Uri.ToString()
             }).ToList();
         }
 
