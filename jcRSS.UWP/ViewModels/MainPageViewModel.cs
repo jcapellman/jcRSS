@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Windows.UI.Xaml.Navigation;
@@ -48,6 +49,8 @@ namespace jcRSS.UWP.ViewModels {
             foreach (var feed in feedList.FeedSites) {
                 FeedListing.AddRange(await _rssClient.GetFeeds(feed.URL));
             }
+
+            FeedListing = new ObservableCollection<FeedListingItem>(FeedListing.OrderByDescending(a => a.PostTime));
         }
         
         public void GotoDetailsPage() =>
