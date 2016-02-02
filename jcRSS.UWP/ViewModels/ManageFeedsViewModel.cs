@@ -23,7 +23,18 @@ namespace jcRSS.UWP.ViewModels {
             set { _feedSiteURL = value; RaisePropertyChanged("FeedSiteURL"); }
         }
 
+        private List<FeedSiteItem> _selectedFeedSites;
+
+        public List<FeedSiteItem> SelectedFeedSites {
+            get { return _selectedFeedSites; }
+            set { _selectedFeedSites = value; RaisePropertyChanged("SelectedFeedSites"); }
+        } 
+         
         private FeedList _feedList;
+
+        public ManageFeedsViewModel() {
+            SelectedFeedSites = new List<FeedSiteItem>();
+        }
 
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state) {
             var feeds = await _FileSystem.GetFile<FeedList>(FILE_TYPES.FEED_LIST);
@@ -49,12 +60,28 @@ namespace jcRSS.UWP.ViewModels {
             FeedSiteListing = new ObservableCollection<FeedSiteItem>(_feedList.FeedSites);
         }
 
+        public async void RemoveFeedSites() {
+            foreach (var feedSite in SelectedFeedSites) {
+                _feedList.FeedSites.Remove(feedSite);
+            }
+
+            await _FileSystem.WriteFile(FILE_TYPES.FEED_LIST, _feedList);
+
+            SelectedFeedSites.Clear();
+
+            FeedSiteListing = new ObservableCollection<FeedSiteItem>(_feedList.FeedSites);
+        }
+
         public async void AddFeedSite() {
             var feedSite = await _rssClient.GetFeedInformation(FeedSiteURL);
 
             _feedList.FeedSites.Add(feedSite);
 
-            var result = await _FileSystem.WriteFile(FILE_TYPES.FEED_LIST, _feedList);            
+            var result = await _FileSystem.WriteFile(FILE_TYPES.FEED_LIST, _feedList);
+
+            FeedSiteListing = new ObservableCollection<FeedSiteItem>(_feedList.FeedSites);
+
+            FeedSiteURL = string.Empty;
         }
     }
 }

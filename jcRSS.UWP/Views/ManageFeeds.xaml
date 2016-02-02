@@ -46,40 +46,41 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        
-         <Grid.RowDefinitions>
+
+        <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        
+
         <controls:PageHeader Grid.Row="0" Content="Manage Feeds">
         </controls:PageHeader>
-        
-        <Grid Grid.Row="1">
+
+        <Grid Grid.Row="1" HorizontalAlignment="Left">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-        <TextBox Width="200" MinWidth="200" MinHeight="60"
+
+            <TextBox Width="200" MinWidth="200" MinHeight="60"
                          Margin="10,10,0,0" Header="Site URL" Grid.Column="0"
                          Text="{Binding FeedSiteURL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          TextWrapping="Wrap">
-                    <interactivity:Interaction.Behaviors>
-                        <behaviors:TextBoxEnterKeyBehavior>
-                            <core:CallMethodAction MethodName="AddFeedSite" TargetObject="{Binding}" />
-                        </behaviors:TextBoxEnterKeyBehavior>
-                        <core:EventTriggerBehavior>
-                            <behaviors:FocusAction />
-                        </core:EventTriggerBehavior>
-                    </interactivity:Interaction.Behaviors>
-                </TextBox>
-            
+                <interactivity:Interaction.Behaviors>
+                    <behaviors:TextBoxEnterKeyBehavior>
+                        <core:CallMethodAction MethodName="AddFeedSite" TargetObject="{Binding}" />
+                    </behaviors:TextBoxEnterKeyBehavior>
+                    <core:EventTriggerBehavior>
+                        <behaviors:FocusAction />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </TextBox>
+
             <Button Margin="12,0" Grid.Column="1" VerticalAlignment="Bottom"
                     Content="Add" />
         </Grid>
 
-         <ListView Grid.Row="2" ItemsSource="{x:Bind ViewModel.FeedSiteListing}" VerticalAlignment="Top">
+        <ListView Grid.Row="2" x:Name="lvFeeds" ItemsSource="{Binding FeedSiteListing, Mode=TwoWay}" ShowsScrollingPlaceholders="True" SelectionMode="Multiple"  VerticalAlignment="Top">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="feeds:FeedSiteItem">
                     <Grid Margin="5,5,5,5">
@@ -96,4 +97,9 @@
             </ListView.ItemTemplate>
         </ListView>
     </Grid>
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Icon="Delete" Label="Delete" Click="btnDelete_Click" />
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>
