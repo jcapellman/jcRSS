@@ -59,15 +59,9 @@
 
         <!--  page header  -->
         <controls:PageHeader Content="Feed">
-            <controls:PageHeader.SecondaryCommands>
-                <AppBarButton Click="{x:Bind ViewModel.GotoSettings}" Label="Settings" />
-                <AppBarButton Click="{x:Bind ViewModel.GotoPrivacy}" Label="Privacy" />
-                <AppBarButton Click="{x:Bind ViewModel.GotoAbout}" Label="About" />
-            </controls:PageHeader.SecondaryCommands>
         </controls:PageHeader>
 
         <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.FeedListing}" SelectedItem="{Binding SelectedFeedListingItem, Mode=TwoWay}" VerticalAlignment="Top">
-            
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="feeds:FeedListingItem">
                     <Grid Margin="5,5,5,5">
@@ -85,4 +79,10 @@
             </ListView.ItemTemplate>
         </ListView>
     </Grid>
+    
+     <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Icon="Refresh" Label="Refresh" Click="{x:Bind ViewModel.RefreshFeed}" />
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>

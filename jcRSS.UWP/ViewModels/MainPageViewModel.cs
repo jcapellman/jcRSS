@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace jcRSS.UWP.ViewModels {
             set { _selectedFeedListingItem = value; RaisePropertyChanged("SelectedFeedListingItem"); if (value != null) { GotoDetailsPage(); } }
         }
 
-        public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state) {
+        private async Task<bool> LoadFeed() {
             var feeds = await _FileSystem.GetFile<FeedList>(FILE_TYPES.FEED_LIST);
 
             var feedList = new FeedList();
@@ -56,19 +57,21 @@ namespace jcRSS.UWP.ViewModels {
             }
 
             FeedListing = new ObservableCollection<FeedListingItem>(FeedListing.OrderByDescending(a => a.PostTime));
+
+            return true;
         }
-        
+
+        public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state) {
+            var result = await LoadFeed();
+
+            if (!result) {
+                throw new Exception("Error loading feed");
+            }
+        }
+
+        public async void RefreshFeed() => await LoadFeed();
+
         public void GotoDetailsPage() =>
             NavigationService.Navigate(typeof(Views.DetailPage), SelectedFeedListingItem);
-
-        public void GotoSettings() =>
-            NavigationService.Navigate(typeof(Views.SettingsPage), 0);
-
-        public void GotoPrivacy() =>
-            NavigationService.Navigate(typeof(Views.SettingsPage), 1);
-
-        public void GotoAbout() =>
-            NavigationService.Navigate(typeof(Views.SettingsPage), 2);
-
     }
 }
