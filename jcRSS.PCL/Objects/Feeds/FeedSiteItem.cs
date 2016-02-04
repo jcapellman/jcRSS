@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace jcRSS.PCL.Objects.Feeds {
     [DataContract]
@@ -11,5 +12,8 @@ namespace jcRSS.PCL.Objects.Feeds {
 
         [DataMember]
         public string URL { get; set; }
+
+        [DataMember]
+        public DateTimeOffset LastPull { get; set; }
     }
 }

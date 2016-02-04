@@ -10,12 +10,12 @@ using jcRSS.PCL.PA;
 
 namespace jcRSS.UWP.PI {
     public class RSSClient : BaseRSSClient {
-        public override async Task<List<FeedListingItem>> GetFeeds(string feedURL) {
+        public override async Task<List<FeedListingItem>> GetFeeds(string feedURL, DateTimeOffset lastPull) {
             var feedClient = new SyndicationClient();
 
             var feeds = await feedClient.RetrieveFeedAsync(new Uri(feedURL));
 
-            return feeds.Items.Where(a => a.Links != null && a.Links.Any()).Select(feed => new FeedListingItem {
+            return feeds.Items.Where(a => a.Links != null && a.Links.Any() && a.LastUpdatedTime > lastPull).Select(feed => new FeedListingItem {
                 FeedSiteTitle = feeds.Title?.Text ?? string.Empty, PostTime = feed.PublishedDate.DateTime, ShortDescription = feed.Summary?.Text ?? string.Empty, Title = feed.Title?.Text ?? string.Empty, URL = feed.Links.FirstOrDefault().Uri.ToString()
             }).ToList();
         }

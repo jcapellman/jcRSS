@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
@@ -75,6 +76,8 @@ namespace jcRSS.UWP.ViewModels {
         public async void AddFeedSite() {
             var feedSite = await _rssClient.GetFeedInformation(FeedSiteURL);
 
+            feedSite.LastPull = DateTimeOffset.Now;
+            
             _feedList.FeedSites.Add(feedSite);
 
             var result = await _FileSystem.WriteFile(FILE_TYPES.FEED_LIST, _feedList);

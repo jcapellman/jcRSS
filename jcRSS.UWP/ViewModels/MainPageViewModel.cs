@@ -52,9 +52,13 @@ namespace jcRSS.UWP.ViewModels {
 
             FeedListing = new ObservableCollection<FeedListingItem>();
 
-            foreach (var feed in feedList.FeedSites) {
-                FeedListing.AddRange(await _rssClient.GetFeeds(feed.URL));
+            for (var x = 0; x < feedList.FeedSites.Count; x++) {
+                FeedListing.AddRange(await _rssClient.GetFeeds(feedList.FeedSites[x].URL, feedList.FeedSites[x].LastPull));
+
+                feedList.FeedSites[x].LastPull = DateTimeOffset.Now;
             }
+
+            var updateResult = await _FileSystem.WriteFile(FILE_TYPES.FEED_LIST, feedList);
 
             FeedListing = new ObservableCollection<FeedListingItem>(FeedListing.OrderByDescending(a => a.PostTime));
 
