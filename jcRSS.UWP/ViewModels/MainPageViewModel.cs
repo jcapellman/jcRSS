@@ -29,7 +29,16 @@ namespace jcRSS.UWP.ViewModels {
             set { _selectedFeedListingItem = value; RaisePropertyChanged("SelectedFeedListingItem"); if (value != null) { GotoDetailsPage(); } }
         }
 
+        private bool _refreshEnabled;
+
+        public bool RefreshEnabled {
+            get {  return _refreshEnabled; }
+            set { _refreshEnabled = value; RaisePropertyChanged(); }
+        }
+
         private async Task<bool> LoadFeed() {
+            RefreshEnabled = false;
+
             var feeds = await _FileSystem.GetFile<FeedList>(FILE_TYPES.FEED_LIST);
 
             var feedList = new FeedList();
@@ -61,6 +70,8 @@ namespace jcRSS.UWP.ViewModels {
             var updateResult = await _FileSystem.WriteFile(FILE_TYPES.FEED_LIST, feedList);
 
             FeedListing = new ObservableCollection<FeedListingItem>(FeedListing.OrderByDescending(a => a.PostTime));
+
+            RefreshEnabled = true;
 
             return true;
         }
