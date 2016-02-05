@@ -31,5 +31,9 @@ namespace jcRSS.UWP.PI {
                 URL = feedURL
             };
         }
+
+        public RSSClient(BaseNetwork baseNetwork) : base(baseNetwork)
+        {
+        }
     }
 }

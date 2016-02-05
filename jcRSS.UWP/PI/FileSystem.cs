@@ -80,5 +80,9 @@ namespace jcRSS.UWP.PI {
 
             return new CTO<bool>(true);
         }
+
+        public FileSystem(BaseNetwork network) : base(network)
+        {
+        }
     }
 }

@@ -1,7 +1,14 @@
 ﻿using Newtonsoft.Json;
 
 namespace jcRSS.PCL.PA {
-    public class BasePA {
+    public class BasePA
+    {
+        internal BaseNetwork _network;
+
+        public BasePA(BaseNetwork network) {
+            _network = network;
+        }
+
         protected static byte[] GetBytesFromT<T>(T obj) {
             var jsonStr = GetJSONStringFromT(obj);
 

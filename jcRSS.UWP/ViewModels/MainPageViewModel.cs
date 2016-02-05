@@ -38,13 +38,7 @@ namespace jcRSS.UWP.ViewModels {
 
         private async Task<bool> LoadFeed() {
             RefreshEnabled = false;
-
-            if (!_network.IsNetworkAvailable()) {
-                RefreshEnabled = false;
-
-                return false;
-            }
-
+            
             var feeds = await _FileSystem.GetFile<FeedList>(FILE_TYPES.FEED_LIST);
 
             var feedList = new FeedList();

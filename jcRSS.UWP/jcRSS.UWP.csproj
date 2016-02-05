@@ -91,6 +91,7 @@
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <None Include="jcRSS.UWP_TemporaryKey.pfx" />
+    <PRIResource Include="Strings\en-us\Resources.resw" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>

@@ -10,5 +10,7 @@ namespace jcRSS.PCL.PA {
         public abstract Task<CTO<bool>> WriteFile<T>(FILE_TYPES fileType, T obj, bool encryptFile = true);
 
         public abstract Task<string> GetLocalFile(string path);
+
+        protected BaseFileSystem(BaseNetwork network) : base(network) { }
     }
 }
