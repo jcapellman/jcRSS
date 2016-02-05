@@ -1,5 +1,6 @@
 ﻿namespace jcRSS.PCL.Enums {
     public enum FILE_TYPES {
-        FEED_LIST
+        FEED_LIST,
+        SETTINGS
     }
 }

@@ -11,6 +11,6 @@ namespace jcRSS.PCL.PA {
 
         public abstract Task<string> GetLocalFile(string path);
 
-        protected BaseFileSystem(BaseNetwork network) : base(network) { }
+        protected BaseFileSystem(BaseNetwork network, SettingsContainer settings) : base(network, settings) { }
     }
 }

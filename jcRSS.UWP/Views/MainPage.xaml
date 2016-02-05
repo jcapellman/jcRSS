@@ -83,6 +83,7 @@
      <Page.BottomAppBar>
         <CommandBar>
             <AppBarButton Icon="Refresh" x:Uid="MainPage_Refresh" IsEnabled="{Binding RefreshEnabled, Mode=TwoWay}" Click="{x:Bind ViewModel.RefreshFeed}" />
+            <AppBarButton Icon="Refresh" x:Uid="MainPage_MarkAsRead" IsEnabled="{Binding MarkAsReadEnabled, Mode=TwoWay}" Click="{x:Bind ViewModel.MarkAsRead}" />
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

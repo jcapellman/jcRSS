@@ -1,12 +1,15 @@
-﻿using Newtonsoft.Json;
+﻿using jcRSS.PCL.Objects.Common;
+
+using Newtonsoft.Json;
 
 namespace jcRSS.PCL.PA {
-    public class BasePA
-    {
+    public class BasePA {
         internal BaseNetwork _network;
+        protected internal SettingsContainer _settings;
 
-        public BasePA(BaseNetwork network) {
+        public BasePA(BaseNetwork network, SettingsContainer settings) {
             _network = network;
+            _settings = settings;
         }
 
         protected static byte[] GetBytesFromT<T>(T obj) {

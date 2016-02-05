@@ -35,7 +35,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Enums\FILE_TYPES.cs" />
+    <Compile Include="Enums\SETTINGS.cs" />
     <Compile Include="Objects\Common\CTO.cs" />
+    <Compile Include="Objects\Common\SettingsContainer.cs" />
     <Compile Include="Objects\Feeds\FeedList.cs" />
     <Compile Include="Objects\Feeds\FeedSiteItem.cs" />
     <Compile Include="Objects\Feeds\FeedListingItem.cs" />

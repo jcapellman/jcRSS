@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Windows.Web.Syndication;
-
+using jcRSS.PCL.Objects.Common;
 using jcRSS.PCL.Objects.Feeds;
 using jcRSS.PCL.PA;
 
@@ -32,8 +32,10 @@ namespace jcRSS.UWP.PI {
             };
         }
 
-        public RSSClient(BaseNetwork baseNetwork) : base(baseNetwork)
-        {
+        public override async Task<CTO<bool>> MarkAllRead() {
+            return new CTO<bool>(true);
         }
+
+        public RSSClient(BaseNetwork baseNetwork, SettingsContainer settings) : base(baseNetwork, settings) { }
     }
 }

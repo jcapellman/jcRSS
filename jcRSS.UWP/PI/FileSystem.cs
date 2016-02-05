@@ -7,13 +7,17 @@ using System.Threading.Tasks;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.DataProtection;
 using Windows.Storage;
-
+using Windows.UI.Xaml;
 using jcRSS.PCL.Enums;
 using jcRSS.PCL.Objects.Common;
 using jcRSS.PCL.PA;
 
 namespace jcRSS.UWP.PI {
     public class FileSystem : BaseFileSystem {
+        private StorageFolder SelectedStorageFolder => (_settings.GetSetting<bool>(SETTINGS.ENABLE_ROAMING)
+            ? ApplicationData.Current.RoamingFolder
+            : ApplicationData.Current.LocalFolder);
+
         public override async Task<string> GetLocalFile(string path) {
             var folder = await StorageFolder.GetFolderFromPathAsync(path);
 
@@ -23,9 +27,7 @@ namespace jcRSS.UWP.PI {
         }
 
         public override async Task<CTO<T>> GetFile<T>(FILE_TYPES fileType, bool encrypted = true) {
-            var appFolder = ApplicationData.Current.LocalFolder;
-
-            var filesinFolder = await appFolder.GetFilesAsync();
+            var filesinFolder = await SelectedStorageFolder.GetFilesAsync();
 
             var file = filesinFolder.FirstOrDefault(a => a.Name == fileType.ToString());
 
@@ -62,8 +64,6 @@ namespace jcRSS.UWP.PI {
         }
 
         public override async Task<CTO<bool>> WriteFile<T>(FILE_TYPES fileType, T obj, bool encryptFile = true) {
-            var storageFolder = ApplicationData.Current.LocalFolder;
-
             var str = GetJSONStringFromT(obj);
 
             byte[] data;
@@ -74,15 +74,14 @@ namespace jcRSS.UWP.PI {
                 data = GetBytesFromT(obj);
             }
 
-            using (var stream = await storageFolder.OpenStreamForWriteAsync(fileType.ToString(), CreationCollisionOption.ReplaceExisting)) {
+            using (var stream = await SelectedStorageFolder.OpenStreamForWriteAsync(fileType.ToString(), CreationCollisionOption.ReplaceExisting)) {
                 stream.Write(data, 0, data.Length);
             }
 
             return new CTO<bool>(true);
         }
 
-        public FileSystem(BaseNetwork network) : base(network)
-        {
+        public FileSystem(BaseNetwork network, SettingsContainer settings) : base(network, settings) {
         }
     }
 }

@@ -36,6 +36,13 @@ namespace jcRSS.UWP.ViewModels {
             set { _refreshEnabled = value; RaisePropertyChanged(); }
         }
 
+        private bool _markAsReadEnabled;
+
+        public bool MarkAsReadEnabled {
+            get { return _markAsReadEnabled; }
+            set { _markAsReadEnabled = value; RaisePropertyChanged(); }
+        }
+
         private async Task<bool> LoadFeed() {
             RefreshEnabled = false;
             
@@ -74,6 +81,14 @@ namespace jcRSS.UWP.ViewModels {
             RefreshEnabled = true;
 
             return true;
+        }
+
+        public async void MarkAsRead() {
+            var result = await _rssClient.MarkAllRead();
+
+            if (result.HasError) {
+                throw new Exception(result.Exception);
+            }
         }
 
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state) {
