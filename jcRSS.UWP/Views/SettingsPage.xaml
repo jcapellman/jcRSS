@@ -91,26 +91,25 @@
             </PivotItem>
             <PivotItem Header="About">
                 <Grid DataContext="{Binding AboutPartViewModel}">
-                    <Border HorizontalAlignment="Right" VerticalAlignment="Top" BorderBrush="DimGray"
-                            BorderThickness="1" IsHitTestVisible="False">
-                        <Border.Background>
-                            <SolidColorBrush Color="{ThemeResource SystemAccentColor}" />
-                        </Border.Background>
-                        <Image Margin="12" Source="{Binding Logo}" Stretch="None" />
-                    </Border>
-                    <StackPanel>
-                        <TextBlock Margin="0,0,0,12" FontSize="24" Text="{Binding DisplayName}" />
-                        <TextBlock Text="{Binding Publisher}" />
-                        <TextBlock>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Margin="0,0,0,12" FontSize="24" Text="{Binding DisplayName}" />
+                        <TextBlock Grid.Row="1" Text="{Binding Publisher}" />
+                        <TextBlock Grid.Row="2">
                             <Run>Version</Run>
                             <Run Text="{Binding Version}" />
                         </TextBlock>
-                    </StackPanel>
+
+                        <HyperlinkButton Grid.Row="3" NavigateUri="http://github.com/jcapellman/jcRSS" Content="GitHub Project Page" />
+                    </Grid>
                 </Grid>
             </PivotItem>
         </Pivot>
-
     </Grid>
-
 </Page>
-
