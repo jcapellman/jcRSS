@@ -1,6 +1,6 @@
 using System;
+
 using Template10.Mvvm;
-using Windows.UI.Xaml;
 
 namespace jcRSS.UWP.ViewModels {
     public class SettingsPageViewModel : ViewModelBase {
@@ -9,26 +9,7 @@ namespace jcRSS.UWP.ViewModels {
     }
 
     public class SettingsPartViewModel : ViewModelBase {
-        Services.SettingsServices.SettingsService _settings;
-
         public SettingsPartViewModel() {
-            if (!Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-                _settings = Services.SettingsServices.SettingsService.Instance;
-        }
-
-        private string _BusyText = "Please wait...";
-        public string BusyText
-        {
-            get { return _BusyText; }
-            set { Set(ref _BusyText, value); }
-        }
-
-        public void ShowBusy() {
-            Views.Shell.SetBusy(true, _BusyText);
-        }
-
-        public void HideBusy() {
-            Views.Shell.SetBusy(false);
         }
     }
 
@@ -51,4 +32,3 @@ namespace jcRSS.UWP.ViewModels {
         public Uri RateMe => new Uri("http://bing.com");
     }
 }
-

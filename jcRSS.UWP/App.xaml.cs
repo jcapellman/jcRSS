@@ -1,7 +1,6 @@
 using System;
 using Windows.UI.Xaml;
 using System.Threading.Tasks;
-using jcRSS.UWP.Services.SettingsServices;
 using Windows.ApplicationModel.Activation;
 
 namespace jcRSS.UWP {
@@ -14,11 +13,6 @@ namespace jcRSS.UWP {
             SplashFactory = (e) => new Views.Splash(e);
 
             #region App settings
-
-            var _settings = SettingsService.Instance;
-            RequestedTheme = _settings.AppTheme;
-            CacheMaxDuration = _settings.CacheMaxDuration;
-            ShowShellBackButton = _settings.UseShellBackButton;
 
             #endregion
         }
