@@ -45,6 +45,7 @@
     <Compile Include="PA\BaseNetwork.cs" />
     <Compile Include="PA\BasePA.cs" />
     <Compile Include="PA\BaseRSSClient.cs" />
+    <Compile Include="PA\BaseSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
