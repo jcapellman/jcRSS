@@ -76,7 +76,7 @@
                 </interactivity:Interaction.Behaviors>
             </TextBox>
 
-            <Button Margin="12,0" Grid.Column="1" VerticalAlignment="Bottom"
+            <Button Margin="12,0" Grid.Column="1" VerticalAlignment="Bottom" Click="{x:Bind ViewModel.AddFeedSite}"
                     Content="Add" />
         </Grid>
 
