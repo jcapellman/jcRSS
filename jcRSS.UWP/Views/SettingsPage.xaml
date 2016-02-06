@@ -51,7 +51,7 @@
         </Grid.RowDefinitions>
 
         <!--  header  -->
-        <controls:PageHeader Content="Settings Page" Frame="{x:Bind Frame}">
+        <controls:PageHeader Content="SettingsDICT Page" Frame="{x:Bind Frame}">
             <Interactivity:Interaction.Behaviors>
                 <Behaviors:EllipsisBehavior Visibility="Auto" />
             </Interactivity:Interaction.Behaviors>
@@ -59,7 +59,7 @@
 
         <!--  content  -->
         <Pivot x:Name="MyPivot" Grid.Row="1">
-            <PivotItem DataContext="{Binding SettingsPartViewModel}" Header="Settings">
+            <PivotItem DataContext="{Binding SettingsPartViewModel}" Header="SettingsDICT">
                 <ScrollViewer Margin="0,12,-12,0" HorizontalContentAlignment="Left"
                               VerticalScrollBarVisibility="Auto">
                     <RelativePanel HorizontalAlignment="Left">

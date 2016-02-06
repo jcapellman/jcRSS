@@ -5,10 +5,10 @@ using jcRSS.PCL.Enums;
 
 namespace jcRSS.PCL.Objects.Common {
     public class SettingsContainer {
-        private readonly Dictionary<string, object> _settings;
+        public readonly Dictionary<string, object> SettingsDICT;
 
         public SettingsContainer() {
-            _settings = new Dictionary<string, object>();
+            SettingsDICT = new Dictionary<string, object>();
         }
 
         public T GetSetting<T>(SETTINGS setting) {
@@ -16,11 +16,11 @@ namespace jcRSS.PCL.Objects.Common {
         }
 
         private T GetSetting<T>(string setting) {
-            if (!_settings.ContainsKey(setting)) {
+            if (!SettingsDICT.ContainsKey(setting)) {
                 return default(T);
             }
 
-            return (T)Convert.ChangeType(_settings[setting], typeof(T));
+            return (T)Convert.ChangeType(SettingsDICT[setting], typeof(T));
         }
 
         public bool WriteSetting(SETTINGS setting, object value) {
@@ -28,10 +28,10 @@ namespace jcRSS.PCL.Objects.Common {
         }
 
         private bool WriteSetting(string setting, object value) {
-            if (_settings.ContainsKey(setting)) {
-                _settings[setting] = value;
+            if (SettingsDICT.ContainsKey(setting)) {
+                SettingsDICT[setting] = value;
             } else {
-                _settings.Add(setting, value);
+                SettingsDICT.Add(setting, value);
             }
 
             return true;
