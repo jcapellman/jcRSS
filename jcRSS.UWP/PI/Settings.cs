@@ -25,5 +25,13 @@ namespace jcRSS.UWP.PI {
                 _localSettings.Values[setting] = _SettingsContainer.SettingsDICT[setting];
             }
         }
+
+        public override T Get<T>(SETTINGS setting) {
+            return _SettingsContainer.GetSetting<T>(setting);
+        }
+
+        public override void Set(SETTINGS setting, object value) {
+            _SettingsContainer.WriteSetting(setting, value);
+        }
     }
 }
