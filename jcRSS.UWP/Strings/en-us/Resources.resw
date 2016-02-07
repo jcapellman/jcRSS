@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="MainPage_MarkAsRead" xml:space="preserve">
+  <data name="MainPage_MarkAsRead.Label" xml:space="preserve">
     <value>Mark as Read</value>
   </data>
-  <data name="MainPage_Refresh" xml:space="preserve">
+  <data name="MainPage_Refresh.Label" xml:space="preserve">
     <value>Refresh</value>
   </data>
 </root>
